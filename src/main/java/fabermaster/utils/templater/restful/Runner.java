@@ -36,16 +36,19 @@ public class Runner
   //declare class attribute(s)
   private String basePath;
   private String fileNameFilter;
+  private String settings;
 
   /**
    * Class Constructor
    * 
    */
   public Runner(String basePath,
-                String fileNameFilter)
+                String fileNameFilter,
+                String settings)
   {
     this.basePath       = basePath;
     this.fileNameFilter = fileNameFilter;
+    this.settings       = settings;
   }
 
   public void run()
@@ -555,7 +558,8 @@ public class Runner
   public static void main(String... params)
   {
     Runner runner = new Runner("C:/Develop/Accenture/DCPP-MMS/J2EE/git/crsm/crsm-up-client/src/main/java/com/accenture/cpaas/dcpp/enabler/crsm/exposure/up/service",
-                               "Service.java");
+                               "Service.java",
+                               "C:/Develop/Accenture/DCPP-MMS/J2EE/git/templater/MethodSettings.json");
     
     
     runner.run();

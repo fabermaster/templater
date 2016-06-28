@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb">
+
+	<xs:complexType name="api">
+		<xs:sequence>
+      <xs:element name="absolutePath" type="xs:string"    minOccurs="1" maxOccurs="1" />
+      <xs:element name="object"       type="xs:string"    minOccurs="1" maxOccurs="1" />
+      <xs:element name="component"    type="xs:string"    minOccurs="1" maxOccurs="1" />
+      <xs:element name="entity"       type="xs:string"    minOccurs="1" maxOccurs="1" />
+      <xs:element name="exposures"    type="exposureType" minOccurs="1" maxOccurs="unbounded" />
+      
+		</xs:sequence>
+	</xs:complexType>
+
+  <xs:complexType name="exposureType">
+    <xs:sequence>
+      <xs:element name="method"       type="xs:string"   minOccurs="1" maxOccurs="1" />
+      <xs:element name="bulk"         type="xs:boolean"  minOccurs="1" maxOccurs="1" />
+      <xs:element name="name"         type="xs:string"   minOccurs="1" maxOccurs="1" />
+      <xs:element name="pathParams"   type="paramType"   minOccurs="1" maxOccurs="unbounded" />
+      <xs:element name="consumes"     type="xs:string"   minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="produces"     type="xs:string"   minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="headerParams" type="paramType"   minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="queryParams"  type="paramType"   minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+	<xs:complexType name="paramType"> 
+		<xs:sequence>
+			<xs:element name="name"        type="xs:string" minOccurs="1" maxOccurs="1" />
+      <xs:element name="type"        type="xs:string" minOccurs="1" maxOccurs="1" />
+      <xs:element name="methodParam" type="xs:string" minOccurs="1" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType> 
+
+  <xs:complexType name="methodSetting">
+    <xs:sequence>
+      <xs:element name="name"         type="xs:string"   minOccurs="1" maxOccurs="unbounded" />
+      <xs:element name="pathParams"   type="paramType"   minOccurs="1" maxOccurs="unbounded" />
+      <xs:element name="headerParams" type="paramType"   minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="queryParams"  type="paramType"   minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="paramTypeSetting">
+    <xs:complexContent>
+      <xs:extension base="paramType">
+        <xs:sequence>
+          <xs:element name="toComplete" type="xs:boolean"   minOccurs="0" maxOccurs="1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>  
+</xs:schema>
+
+

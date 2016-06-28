@@ -1,0 +1,9 @@
+<jaxb:bindings xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" version="2.1">
+	<jaxb:globalBindings>
+		<jaxb:serializable />
+        <jaxb:javaType name="java.lang.Integer" xmlType="xs:int" />
+        <jaxb:javaType name="java.lang.Long" xmlType="xs:long" />
+	</jaxb:globalBindings>
+	
+</jaxb:bindings>

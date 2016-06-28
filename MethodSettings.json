@@ -1,0 +1,28 @@
+{
+	"methodSetting": [{
+		"name": ["insert",
+		"updateBulk",
+		"retrieveList"],
+		"pathParam": [{
+			"name": "TENANT",
+			"type": "String",
+			"methodParam": "tenant"
+		}]
+	},
+	{
+		"name": ["update",
+		"retrieve"],
+		"pathParam": [{
+			"name": "TENANT",
+			"type": "String",
+			"methodParam": "tenant"
+		},
+		{
+			"name": "ID",
+			"type": "BigInteger",
+			"methodParam": "Id",
+			"toComplete": true
+		}]
+	},
+	]
+}
