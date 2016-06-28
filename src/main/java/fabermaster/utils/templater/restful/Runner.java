@@ -7,11 +7,13 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import fabermaster.utils.templater.exception.TemplaterException;
 import fabermaster.utils.templater.helper.Assorted;
@@ -19,6 +21,10 @@ import fabermaster.utils.templater.model.restful.Api;
 import fabermaster.utils.templater.model.restful.ExposureType;
 import fabermaster.utils.templater.model.restful.ISettings.EFacadeMethod;
 import fabermaster.utils.templater.model.restful.ISettings.EMediaType;
+import fabermaster.utils.templater.model.restful.MethodSetting;
+import fabermaster.utils.templater.model.restful.ParamType;
+import fabermaster.utils.templater.model.restful.ParamTypeSetting;
+import fabermaster.utils.templater.model.restful.SettingType;
 
 public class Runner
 {
@@ -55,6 +61,8 @@ public class Runner
   {
     try
     {
+      //preliminary checks over provided parameters
+      checkParams();
       //gets interfaces to inspect
       loadInterfaces(inspectBasePath());
       //some magic
@@ -65,7 +73,33 @@ public class Runner
       System.err.println("Error   : [" + ex.getCode() + "]\nMessage : [" + ex.getMessage() +"]");
     }
   }
-  
+
+  /**
+   * Checks provided parameters
+   * 
+   * @throws TemplaterException
+   * @author Fabrizio Parlani
+   */
+  private void checkParams()
+  throws TemplaterException
+  {
+    if (Assorted.isEmpty(basePath, true))
+    {
+      //throw custom exception
+      throw new TemplaterException("TEX-VAL-001", "Needed base path has not been provided");
+    }
+    if (Assorted.isEmpty(fileNameFilter, true))
+    {
+      //throw custom exception
+      throw new TemplaterException("TEX-VAL-002", "Needed file name filter has not been provided");
+    }
+    if (Assorted.isEmpty(settings, true))
+    {
+      //throw custom exception
+      throw new TemplaterException("TEX-VAL-003", "Needed method settings path has not been provided");
+    }
+  }
+
   /**
    * Inspects provided base path
    * 
@@ -238,6 +272,10 @@ public class Runner
         //log structure
         System.out.println(" - Structure   [" + structure + "]");
       }
+      catch ( TemplaterException ex )
+      {
+        throw ex;
+      }
       catch ( IOException ex )
       {
         System.err.println("Unable to get file content from [" + entry.getValue()  + "] due to following I/O exception [" + ex.getMessage() + "]");
@@ -258,9 +296,11 @@ public class Runner
    * Fill facade method exposure attributes
    * 
    * @param structure
+   * @throws TemplaterException
    * @return
    */
   private List<ExposureType> fillExposure(Api structure)
+  throws TemplaterException
   {
     //declare returning objects
     List<ExposureType> exposures = new ArrayList<ExposureType>(0);
@@ -286,7 +326,9 @@ public class Runner
       fillMediaTypes(facadeMethod.getMethodConsumes(),
                      exposure.getConsumes());
 
-      //set path parameters
+      //set path parameters from provided settings
+      fillMethodParameters(exposure,
+                           structure.getObject());
       
       
       //add filled exposure into returning list
@@ -305,6 +347,7 @@ public class Runner
    * 
    * @param mediaTypes
    * @param container
+   * @author Fabrizio Parlani
    */
   private void fillMediaTypes(EMediaType[] mediaTypes,
                               List<String> container)
@@ -319,6 +362,125 @@ public class Runner
       }
     }
   }
+
+  /**
+   * Fills API method parameters
+   * 
+   * @param exposure
+   * @param object
+   * @throws TemplaterException
+   * @author Fabrizio Parlani
+   */
+  private void fillMethodParameters(ExposureType exposure,
+                                    String       object)
+  throws TemplaterException
+  {
+    try
+    {
+      //load settings from provided file
+      MethodSetting methodSettings = (new Gson()).fromJson(new String(Files.readAllBytes(Paths.get(this.settings)), 
+                                                                      StandardCharsets.UTF_8), 
+                                                           MethodSetting.class);
+
+      //check for valid provided settings
+      if (methodSettings != null)
+      {
+        //cycle settings
+        for (SettingType methodSetting : methodSettings.getSettings())
+        {
+          //check method setting
+          if (Assorted.isNotEmpty(methodSetting.getName()))
+          {
+            //check if cycled 
+            if (methodSetting.getName().contains(exposure.getName()))
+            {
+              //check for existing path parameters
+              if (Assorted.isNotEmpty(methodSetting.getPathParams()))
+              {
+                //fills method path parameters
+                fillParameters(exposure.getPathParams(),
+                               methodSetting.getPathParams(),
+                               object);
+              }
+              else
+              {
+                //throw custom exception
+                throw new TemplaterException("TEX-011", "Method(s) setting must contains at least one path parameters defined");
+              }
+              
+              //fills probably existing header parameters
+              fillParameters(exposure.getHeaderParams(),
+                             methodSetting.getHeaderParams(),
+                             object);
+
+              //fills probably existing query parameters
+              fillParameters(exposure.getHeaderParams(),
+                             methodSetting.getHeaderParams(),
+                             object);
+            }
+          }
+          else
+          {
+            //throw custom exception
+            throw new TemplaterException("TEX-010", "Names list into settings file must have at least one value");
+          }
+        }
+      }
+      else
+      {
+        //throw custom exception
+        throw new TemplaterException("TEX-009", "An empty settings file has been provided");
+      }
+    }
+    catch ( TemplaterException ex )
+    {
+      throw ex;
+    }
+    catch ( IOException ex )
+    {
+      //throw custom exception
+      throw new TemplaterException("TEX-007", "An invalid settings file has been provided. Following I/O exception occurred [" + ex.getMessage() + "]");
+    }
+    catch ( JsonSyntaxException ex )
+    {
+      //throw custom exception
+      throw new TemplaterException("TEX-008", "Unable to unmarshal provided settings file. Following JSON exception occurred [" + ex.getMessage() + "]");
+    }
+  }
+
+  /**
+   * Fills generic parameters collection
+   * 
+   * @param apiParameters
+   * @param parameterSettings
+   * @param object
+   * @throws TemplaterException
+   * @author Fabrizio Parlani
+   */
+  private void fillParameters(List<ParamType>        apiParameters,
+                              List<ParamTypeSetting> parameterSettings,
+                              String                 object)
+  throws TemplaterException
+  {
+    //check provided parameters setting collection
+    if (Assorted.isNotEmpty(parameterSettings))
+    {
+      for (ParamTypeSetting setting : parameterSettings)
+      {
+        //save cycled setting into api method parameters
+        ParamType apiParam = ParamType.class.cast(setting);
+        
+        //check for name handling
+        if (setting.isToComplete())
+        {
+          //complete parameter name with object type prefix
+          apiParam.setName(object.toUpperCase() + apiParam.getName());
+          apiParam.setMethodParam(object.toLowerCase() + apiParam.getMethodParam());
+        }
+      }
+    }
+  }
+  
 
   /**
    * Private class used to filter proper file by name

@@ -29,6 +29,7 @@
     <org.apache.velocity.version>1.7</org.apache.velocity.version>
     <org.apache.anakia.version>1.0</org.apache.anakia.version>
     <org.apache.texen.version>1.0</org.apache.texen.version>
+    <com.google.code.gson.version>2.3.1</com.google.code.gson.version>
 
   </properties> 
 
@@ -67,7 +68,11 @@
         <version>${org.apache.texen.version}</version>
       </dependency>
 
-
+      <dependency>
+        <groupId>com.google.code.gson</groupId>
+        <artifactId>gson</artifactId>
+        <version>${com.google.code.gson.version}</version>
+      </dependency>
 
       <dependency>
         <groupId>org.jboss.fuse.bom</groupId>
@@ -76,42 +81,7 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-<!--
-      <dependency>
-        <groupId>com.accenture.cpaas.dcpp.kernel</groupId>
-        <artifactId>metering-client</artifactId>
-        <version>${metering.client.version}</version>
-        <exclusions>
-          <exclusion>
-            <artifactId>cxf-core</artifactId>
-            <groupId>org.apache.cxf</groupId>
-          </exclusion>
-        </exclusions>
-      </dependency>
 
-      <dependency>
-        <groupId>com.accenture.cpaas.dcpp.enabler</groupId>
-        <artifactId>crsm-sc-client</artifactId>
-        <version>${crsm.sc.client.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>com.accenture.cpaas.dcpp.enabler</groupId>
-        <artifactId>crsm-up-client</artifactId>
-        <version>${crsm.up.client.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>com.accenture.cpaas.dcpp.enabler</groupId>
-        <artifactId>crsm-pm-client</artifactId>
-        <version>${crsm.pm.client.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>com.accenture.cpaas.dcpp.enabler</groupId>
-        <artifactId>crsm-mgmt-client</artifactId>
-        <version>${crsm.mgmt.client.version}</version>
-      </dependency> -->
     </dependencies>
   </dependencyManagement>
 
@@ -216,7 +186,7 @@
         </executions>
 
         <configuration> 
-          <packageName>com.accenture.cpaas.dcpp.utils.templater.restful.model</packageName> 
+          <packageName>fabermaster.utils.templater.model.restful</packageName> 
         </configuration>
       </plugin>
       

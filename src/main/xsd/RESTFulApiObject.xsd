@@ -36,10 +36,16 @@
 
   <xs:complexType name="methodSetting">
     <xs:sequence>
-      <xs:element name="name"         type="xs:string"   minOccurs="1" maxOccurs="unbounded" />
-      <xs:element name="pathParams"   type="paramType"   minOccurs="1" maxOccurs="unbounded" />
-      <xs:element name="headerParams" type="paramType"   minOccurs="0" maxOccurs="unbounded" />
-      <xs:element name="queryParams"  type="paramType"   minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="settings" type="settingType" minOccurs="1" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="settingType">
+    <xs:sequence>
+      <xs:element name="name"         type="xs:string"          minOccurs="1" maxOccurs="unbounded" />
+      <xs:element name="pathParams"   type="paramTypeSetting"   minOccurs="1" maxOccurs="unbounded" />
+      <xs:element name="headerParams" type="paramTypeSetting"   minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="queryParams"  type="paramTypeSetting"   minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
   </xs:complexType>
 
