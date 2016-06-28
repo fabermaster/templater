@@ -11,6 +11,7 @@ package fabermaster.utils.templater.model.restful;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -76,4 +77,18 @@ public class MethodSetting
         return this.settings;
     }
 
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString()
+    {
+      StringBuilder builder = new StringBuilder();
+      builder.append("MethodSetting [settings=");
+      builder.append(settings);
+      builder.append("]");
+      return builder.toString();
+    }
+
+    
 }

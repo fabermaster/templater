@@ -382,15 +382,19 @@ public class Runner
                                                                       StandardCharsets.UTF_8), 
                                                            MethodSetting.class);
 
+      System.out.println("    METHOD SETTINGS [" + methodSettings + "]");
+      
       //check for valid provided settings
       if (methodSettings != null)
       {
         //cycle settings
         for (SettingType methodSetting : methodSettings.getSettings())
         {
+          System.out.println(" PARAM CYCLE");
           //check method setting
           if (Assorted.isNotEmpty(methodSetting.getName()))
           {
+            System.out.println("   ### Setting [" + exposure.getName() + "]");
             //check if cycled 
             if (methodSetting.getName().contains(exposure.getName()))
             {
@@ -417,6 +421,9 @@ public class Runner
               fillParameters(exposure.getHeaderParams(),
                              methodSetting.getHeaderParams(),
                              object);
+
+              //exit cycle
+              break;
             }
           }
           else
@@ -477,6 +484,14 @@ public class Runner
           apiParam.setName(object.toUpperCase() + apiParam.getName());
           apiParam.setMethodParam(object.toLowerCase() + apiParam.getMethodParam());
         }
+        
+        //add parameter to returning collection
+        apiParameters.add(apiParam);
+        
+        System.out.println("    - Mapped Parameter : [" + apiParam + "]");
+        
+        //destroy used object
+        apiParam = null;
       }
     }
   }
