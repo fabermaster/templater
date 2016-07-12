@@ -4,11 +4,13 @@
 
 	<xs:complexType name="api">
 		<xs:sequence>
-      <xs:element name="absolutePath" type="xs:string"    minOccurs="1" maxOccurs="1" />
-      <xs:element name="object"       type="xs:string"    minOccurs="1" maxOccurs="1" />
-      <xs:element name="component"    type="xs:string"    minOccurs="1" maxOccurs="1" />
-      <xs:element name="entity"       type="xs:string"    minOccurs="1" maxOccurs="1" />
-      <xs:element name="exposures"    type="exposureType" minOccurs="1" maxOccurs="unbounded" />
+      <xs:element name="absolutePath"  type="xs:string"    minOccurs="1" maxOccurs="1" />
+      <xs:element name="object"        type="xs:string"    minOccurs="1" maxOccurs="1" />
+      <xs:element name="objectId"      type="xs:string"    minOccurs="1" maxOccurs="1" />
+      <xs:element name="component"     type="xs:string"    minOccurs="1" maxOccurs="1" />
+      <xs:element name="entity"        type="xs:string"    minOccurs="1" maxOccurs="1" />
+      <xs:element name="packagePrefix" type="xs:string"    minOccurs="1" maxOccurs="1" />
+      <xs:element name="exposures"     type="exposureType" minOccurs="1" maxOccurs="unbounded" />
       
 		</xs:sequence>
 	</xs:complexType>
@@ -28,24 +30,33 @@
 
 	<xs:complexType name="paramType"> 
 		<xs:sequence>
-			<xs:element name="name"        type="xs:string" minOccurs="1" maxOccurs="1" />
-      <xs:element name="type"        type="xs:string" minOccurs="1" maxOccurs="1" />
-      <xs:element name="methodParam" type="xs:string" minOccurs="1" maxOccurs="1" />
+			<xs:element name="name"        type="xs:string"  minOccurs="1" maxOccurs="1" />
+      <xs:element name="type"        type="xs:string"  minOccurs="1" maxOccurs="1" />
+      <xs:element name="methodParam" type="xs:string"  minOccurs="1" maxOccurs="1" />
+      <xs:element name="toDecode"    type="xs:boolean" minOccurs="0" maxOccurs="1" />
 		</xs:sequence>
 	</xs:complexType> 
 
   <xs:complexType name="methodSetting">
     <xs:sequence>
-      <xs:element name="settings" type="settingType" minOccurs="1" maxOccurs="unbounded" />
+      <xs:element name="outFolder" type="xs:string"   minOccurs="1" maxOccurs="1" />
+      <xs:element name="settings"  type="settingType" minOccurs="1" maxOccurs="unbounded" />
     </xs:sequence>
   </xs:complexType>
 
   <xs:complexType name="settingType">
     <xs:sequence>
-      <xs:element name="name"         type="xs:string"          minOccurs="1" maxOccurs="unbounded" />
-      <xs:element name="pathParams"   type="paramTypeSetting"   minOccurs="1" maxOccurs="unbounded" />
-      <xs:element name="headerParams" type="paramTypeSetting"   minOccurs="0" maxOccurs="unbounded" />
-      <xs:element name="queryParams"  type="paramTypeSetting"   minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="name"         type="xs:string"        minOccurs="1" maxOccurs="unbounded" />
+      <xs:element name="pathParams"   type="paramTypeSetting" minOccurs="1" maxOccurs="unbounded" />
+      <xs:element name="headerParams" type="paramTypeSetting" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="queryParams"  type="entitySetting"    minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="entitySetting">
+    <xs:sequence>
+      <xs:element name="entityName"  type="xs:string"        minOccurs="1" maxOccurs="1" />
+      <xs:element name="parameters"  type="paramTypeSetting" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
   </xs:complexType>
 
@@ -53,7 +64,7 @@
     <xs:complexContent>
       <xs:extension base="paramType">
         <xs:sequence>
-          <xs:element name="toComplete" type="xs:boolean"   minOccurs="0" maxOccurs="1" />
+          <xs:element name="toComplete" type="xs:boolean" minOccurs="0" maxOccurs="1" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>

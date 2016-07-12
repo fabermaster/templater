@@ -19,17 +19,17 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for methodSetting complex type.
+ * <p>Java class for entitySetting complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="methodSetting">
+ * &lt;complexType name="entitySetting">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="outFolder" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="settings" type="{}settingType" maxOccurs="unbounded"/>
+ *         &lt;element name="entityName" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="parameters" type="{}paramTypeSetting" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -39,70 +39,69 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "methodSetting", propOrder = {
-    "outFolder",
-    "settings"
+@XmlType(name = "entitySetting", propOrder = {
+    "entityName",
+    "parameters"
 })
-public class MethodSetting
+public class EntitySetting
     implements Serializable
 {
 
     @XmlElement(required = true)
-    protected String outFolder;
-    @XmlElement(required = true)
-    protected List<SettingType> settings;
+    protected String entityName;
+    protected List<ParamTypeSetting> parameters;
 
     /**
-     * Gets the value of the outFolder property.
+     * Gets the value of the entityName property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getOutFolder() {
-        return outFolder;
+    public String getEntityName() {
+        return entityName;
     }
 
     /**
-     * Sets the value of the outFolder property.
+     * Sets the value of the entityName property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setOutFolder(String value) {
-        this.outFolder = value;
+    public void setEntityName(String value) {
+        this.entityName = value;
     }
 
     /**
-     * Gets the value of the settings property.
+     * Gets the value of the parameters property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the settings property.
+     * This is why there is not a <CODE>set</CODE> method for the parameters property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getSettings().add(newItem);
+     *    getParameters().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link SettingType }
+     * {@link ParamTypeSetting }
      * 
      * 
      */
-    public List<SettingType> getSettings() {
-        if (settings == null) {
-            settings = new ArrayList<SettingType>();
+    public List<ParamTypeSetting> getParameters() {
+        if (parameters == null) {
+            parameters = new ArrayList<ParamTypeSetting>();
         }
-        return this.settings;
+        return this.parameters;
     }
 
     /* (non-Javadoc)
@@ -112,10 +111,10 @@ public class MethodSetting
     public String toString()
     {
       StringBuilder builder = new StringBuilder();
-      builder.append("MethodSetting [outFolder=");
-      builder.append(outFolder);
-      builder.append(", settings=");
-      builder.append(settings);
+      builder.append("EntitySetting [entityName=");
+      builder.append(entityName);
+      builder.append(", parameters=");
+      builder.append(parameters);
       builder.append("]");
       return builder.toString();
     }

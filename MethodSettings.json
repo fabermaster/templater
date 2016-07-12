@@ -1,30 +1,154 @@
 {
-	"methodSetting": {
-		"settings": [{
-			"name": ["insert",
-			"updateBulk",
-			"retrieveList"],
-			"pathParam": [{
-				"name": "TENANT",
-				"type": "String",
-				"methodParam": "tenant"
-			}]
-		},
-		{
-			"name": ["update",
-			"retrieve"],
-			"pathParam": [{
-				"name": "TENANT",
-				"type": "String",
-				"methodParam": "tenant"
-			},
-			{
-				"name": "ID",
-				"type": "BigInteger",
-				"methodParam": "Id",
-				"toComplete": true
-			}]
-		}
-		]
-	}
+  "outFolder" : "C:\\Develop\\Accenture\\DCPP-MMS\\J2EE\\git\\templater\\out",
+  "settings": [{
+    "name": ["insert",
+    "updateBulk"],
+    "pathParams": [{
+      "name": "TENANT",
+      "type": "String",
+      "methodParam": "tenant"
+    }]
+  },
+  {
+    "name": ["update"],
+    "pathParams": [{
+      "name": "TENANT",
+      "type": "String",
+      "methodParam": "tenant"
+    },
+    {
+      "name": "ID",
+      "type": "BigInteger",
+      "methodParam": "Id",
+      "toComplete": true
+    }]
+  },
+  {
+    "name": ["retrieve"],
+    "headerParams": [{
+      "name": "transactionId",
+      "type": "String",
+      "methodParam": "transactionId"
+    }],
+    "pathParams": [{
+      "name": "TENANT",
+      "type": "String",
+      "methodParam": "tenant"
+    },
+    {
+      "name": "ID",
+      "type": "BigInteger",
+      "methodParam": "Id",
+      "toComplete": true
+    }],
+    "queryParams": [{
+      "entityName" : "businessuser",
+      "parameters" : [{
+        "name": "languageId",
+        "type": "Long",
+        "methodParam": "languageId",
+        "toDecode": "false"
+      },
+      {
+        "name": "parentsFlag",
+        "type": "Boolean",
+        "methodParam": "parentsFlag",
+        "toDecode": "false"
+      },
+      {
+        "name": "businessChildrenFlag",
+        "type": "Boolean",
+        "methodParam": "businessChildrenFlag",
+        "toDecode": "false"
+      },
+      {
+        "name": "userChildrenFlag",
+        "type": "Boolean",
+        "methodParam": "userChildrenFlag",
+        "toDecode": "false"
+      },
+      {
+        "name": "offeringFlag",
+        "type": "Boolean",
+        "methodParam": "offeringFlag",
+        "toDecode": "false"
+      },
+      {
+        "name": "profileAttributeFlag",
+        "type": "Boolean",
+        "methodParam": "profileAttributeFlag",
+        "toDecode": "false"
+      }]
+    }]
+  },
+  {
+    "name": ["retrieveList"],
+    "headerParams": [{
+      "name": "transactionId",
+      "type": "String",
+      "methodParam": "transactionId"
+    }],
+    "pathParams": [{
+      "name": "TENANT",
+      "type": "String",
+      "methodParam": "tenant"
+    }],
+    "queryParams": [{
+      "entityName" : "businessuser",
+      "parameters" : [{
+        "name": "name",
+        "type": "String",
+        "methodParam": "name",
+        "toDecode": "false"
+      },
+      {
+        "name": "parentBusinessUserId",
+        "type": "BigInteger",
+        "methodParam": "parentBusinessUserId",
+        "toDecode": "false"
+      },
+      {
+        "name": "statusId",
+        "type": "Integer",
+        "methodParam": "statusId",
+        "toDecode": "false"
+      },
+      {
+        "name": "profileId",
+        "type": "Long",
+        "methodParam": "profileId",
+        "toDecode": "false"
+      },
+      {
+        "name": "offeringId",
+        "type": "Long",
+        "methodParam": "offeringId",
+        "toDecode": "false"
+      },
+      {
+        "name": "productId",
+        "type": "Long",
+        "methodParam": "productId",
+        "toDecode": "false"
+      },
+      {
+        "name": "attributeList",
+        "type": "String",
+        "methodParam": "attributeList",
+        "toDecode": "false"
+      },
+      {
+        "name": "itemsPerPage",
+        "type": "Integer",
+        "methodParam": "itemsPerPage",
+        "toDecode": "false"
+      },
+      {
+        "name": "pageNumber",
+        "type": "Integer",
+        "methodParam": "pageNumber",
+        "toDecode": "false"
+      }]
+    }]
+  }]
 }
